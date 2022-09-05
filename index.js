@@ -1,11 +1,14 @@
 const express = require("express");
-const app= express();
+const app = express();
 const port = 8000;
 
-app.listen(port,function(err){
-    if(err){
-        console.log(`Error : ${err}`);
-    }
+// use express router
 
-    console.log(`Server is up & running on ${port}`);
-})
+app.use("/",require("./routes"));
+
+app.listen(port, function (err) {
+  if (err) {
+    console.log(`Error : ${err}`);
+  }
+  console.log(`Server is up & running on ${port}`);
+});
