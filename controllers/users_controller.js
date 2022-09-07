@@ -3,7 +3,7 @@ module.exports.profile = function (req, res) {
 
   // rendering view
 
-  return res.render("users",{
+  return res.render("users_profile",{
     title:"profile page"
   });
 
