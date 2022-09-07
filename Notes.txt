@@ -1,0 +1,3 @@
+ <%-scripts%>
+ ->  just above last of body 
+ -> In layout file
