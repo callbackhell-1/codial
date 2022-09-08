@@ -18,3 +18,13 @@ module.exports.signIn = function (req, res) {
     title: "codial | signIn",
   });
 };
+
+// get sign up data
+module.exports.create = function(req,res){
+  // Todo Later
+}
+
+// to sign in data
+module.exports.createSession = function(req,res){
+  // TO DO
+}
