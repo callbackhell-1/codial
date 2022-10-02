@@ -57,7 +57,7 @@ module.exports.createSession = function (req, res) {
     }
 
     // Handle user found
-    if (user) {
+    if (user ) {
       // Handle password which doesn't ,match
       if(user.password != req.body.password){
         return res.redirect("back");
