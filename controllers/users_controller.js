@@ -39,8 +39,7 @@ module.exports.create = function (req, res) {
         }
         return res.redirect("/users/sign-in");
       });
-    }
-    else{
+    } else {
       return res.redirect("back");
     }
   });
@@ -48,5 +47,27 @@ module.exports.create = function (req, res) {
 
 // to sign in data
 module.exports.createSession = function (req, res) {
-  // TO DO
+  // steps to Authentication  ==> 
+
+  // Find the user
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) {
+      console.log("Error in finiding user signing in");
+      return;
+    }
+
+    // Handle user found
+    if (user) {
+      // Handle password which doesn't ,match
+      if(user.password != req.body.password){
+        return res.redirect("back");
+      }
+      // Hanlde session creation
+      res.cookie("user_id",user.id);
+      return res.redirect("/users/profile")
+    } else {
+      // Handle user not found
+      return res.redirect("back");
+    }
+  });
 };
