@@ -1,10 +1,33 @@
 const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
+  //1.  check in my cookies , whether user_id is present or not
+  if(req.cookies.user_id){
+    // 3. if user_id is present
+
+    User.findById(req.cookies.user_id ,function(err,user){
+      if(user){
+        // 4. If user found redirect to profile pg.
+        return res.render("users_profile",{
+          title: "user profile",
+          user:user
+        })
+      }
+      // 5. If user is not found
+      else{ 
+        return res.redirect("/users/sign-in")
+      }
+    });
+  }
+  //2. If cookies not present
+  else{
+    return res.redirect("/users/sign-in");
+  }
+ 
   // rendering view
-  return res.render("users_profile", {
-    title: "profile page",
-  });
+  // return res.render("users_profile", {
+  //   title: "profile page",
+  // });
 };
 
 // sign up controller  & render sign up pg
