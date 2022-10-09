@@ -39,8 +39,7 @@ module.exports.create = function (req, res) {
         }
         return res.redirect("/users/sign-in");
       });
-    }
-    else{
+    } else {
       return res.redirect("back");
     }
   });
@@ -48,5 +47,5 @@ module.exports.create = function (req, res) {
 
 // to sign in data
 module.exports.createSession = function (req, res) {
-  // TO DO
+  return res.redirect("/");
 };
