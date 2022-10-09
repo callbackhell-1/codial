@@ -46,6 +46,8 @@ app.use("/", require("./routes"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(passport.setAuthenticatedUser);
+
 app.listen(port, function (err) {
   if (err) {
     console.log(`Error : ${err}`);
