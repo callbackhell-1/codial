@@ -1,0 +1,12 @@
+    
+     To DO error (Lecture before sign out)
+     ===============================
+     store: new MongoStore(
+       {
+         mongooseConnection: db,
+         autoRemove: "disabled",
+       },
+       function (err) {
+         console.log(err || "connect-mongodb setup ok");
+       }
+     ),
