@@ -9,6 +9,9 @@ module.exports.profile = function (req, res) {
 
 // sign up controller  & render sign up pg
 module.exports.signUp = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
   return res.render("user_sign_up", {
     title: "codial | signup",
   });
@@ -16,6 +19,9 @@ module.exports.signUp = function (req, res) {
 
 // sign in controller & render sign in pg
 module.exports.signIn = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
   return res.render("user_sign_in", {
     title: "codial | signIn",
   });
