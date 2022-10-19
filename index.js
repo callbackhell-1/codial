@@ -36,7 +36,7 @@ app.set("views", "./views");
 app.use(
   session({
     name: "codial",
-    // TODO change the secret before deployment in prod
+    // TODO: change the secret before deployment in prod
     secret: "randomSomething",
     saveUninitialized: false,
     resave: false,

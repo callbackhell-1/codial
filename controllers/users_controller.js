@@ -56,6 +56,8 @@ module.exports.createSession = function (req, res) {
   return res.redirect("/");
 };
 
+// TODO:  logout not working.
+ 
 module.exports.destroySession = function (req, res) {
   req.logout();
 
