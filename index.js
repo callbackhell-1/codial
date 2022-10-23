@@ -43,7 +43,7 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
-    // To DO error
+    // TODO: error
 
     // store: new MongoStore(
     //   {
