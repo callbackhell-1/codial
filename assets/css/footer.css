@@ -9,3 +9,5 @@
     text-decoration: none; }
   #layout-footer .footer-nav ul {
     list-style: none; }
+  #layout-footer #heart {
+    color: red; }
