@@ -36,15 +36,15 @@ app.set("views", "./views");
 app.use(
   session({
     name: "codial",
-    // TODO change the secret before deployment in prod
+    // TODO: change the secret before deployment in prod
     secret: "randomSomething",
     saveUninitialized: false,
     resave: false,
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
-    // To DO error
-
+    // TODO: error
+   
     // store: new MongoStore(
     //   {
     //     mongooseConnection: db,
