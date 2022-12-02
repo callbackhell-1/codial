@@ -25,8 +25,8 @@
           <br />
           <small><%=post.user.name%></small>
         </p>
+        <!-- comment -->
         <div class="post-comments">
-          <!-- only logged in user can see post form -->
           <% if(locals.user){ %>
           <form action="comments/create" method="POST">
             <input
