@@ -14,7 +14,13 @@ module.exports.home = function (req, res) {
   // });
   // populate the user of each post
   Post.find({})
-    .populate("user")
+    .populate("user") // post.js me ye user field hai
+    .populate({
+      path: "comments", //post.js me ye comments hai
+      populate: {
+        path: "user",
+      },
+    })
     .exec(function (err, posts) {
       return res.render("home", {
         title: "Codial | Home",
