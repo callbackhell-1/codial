@@ -1,9 +1,13 @@
 const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
-  // rendering view
-  return res.render("users_profile", {
-    title: "profile page",
+  // find the user
+  User.findById(req.params.id, function (err, user) {
+    // rendering view
+    return res.render("users_profile", {
+      title: "profile page",
+      profile_user: user,
+    });
   });
 };
 
@@ -61,7 +65,7 @@ module.exports.destroySession = function (req, res, next) {
     if (err) {
       console.log(err);
     }
-   return  res.redirect("/");
+    return res.redirect("/");
   });
   next();
 };
