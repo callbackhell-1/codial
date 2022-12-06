@@ -1,21 +1,21 @@
 const User = require("../models/user");
 
-module.exports.profile = function (req, res) {
+module.exports.profile = async function (req, res) {
   // find the user
-  User.findById(req.params.id, function (err, user) {
-    // rendering view
-    return res.render("users_profile", {
-      title: "profile page",
-      profile_user: user,
-    });
+  let user = await User.findById(req.params.id);
+
+  // rendering view
+  return res.render("users_profile", {
+    title: "profile page",
+    profile_user: user,
   });
 };
 
-module.exports.update = function (req, res) {
+module.exports.update = async function (req, res) {
   if (req.user.id == req.params.id) {
-    User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
-      return res.redirect("back");
-    });
+    let user = await User.findByIdAndUpdate(req.params.id, req.body);
+
+    return res.redirect("back");
   } else {
     return res.status(401).send("Unauthorized");
   }

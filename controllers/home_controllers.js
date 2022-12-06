@@ -1,39 +1,27 @@
 const Post = require("../models/post");
 const User = require("../models/user");
-module.exports.home = function (req, res) {
-  // return res.end("<h1>Express is Up & running for codial</h1>");
-  //see the cookies
-  // console.log(req.cookies);
-  // res.cookie("user_id", 222);
-  // return view file
-  // return id
-  // Post.find({}, function (err, posts) {
-  //   return res.render("home", {
-  //     title: "Codial | Home",
-  //     posts: posts,
-  //   });
-  // });
-  // populate the user of each post
-  Post.find({})
-    .populate("user") // post.js me ye user field hai
-    .populate({
-      path: "comments", //post.js me ye comments hai
-      populate: {
-        path: "user",
-      },
-    })
-    .exec(function (err, posts) {
-      // We want all the user
-      User.find({}, function (err, users) {
-        return res.render("home", {
-          title: "Codial | Home",
-          posts: posts,
-          all_user: users,
-        });
+module.exports.home = async function (req, res) {
+  try {
+    // populate user of each post
+    let posts = await Post.find({})
+      .populate("user") // In post.js this is user field hai
+      .populate({
+        path: "comments", //In post.js this is comments field hai
+        populate: {
+          path: "user",
+        },
       });
-    });
-};
 
-// module.exports.profile = function (req, res) {
-//   return res.end("<h1>Profile page is Loades</h1>");
-// };
+    // We want all the user
+    let users = await User.find({});
+
+    // once we got "posts" & "users" we return it to browser
+    return res.render("home", {
+      title: "Codial | Home",
+      posts: posts,
+      all_user: users,
+    });
+  } catch (err) {
+    console.log("error:", err);
+  }
+};
