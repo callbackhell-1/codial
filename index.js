@@ -7,7 +7,8 @@ const expressLayouts = require("express-ejs-layouts");
 const db = require("./config/mongoose");
 // used for session cookies
 const session = require("express-session");
-const passport = require("./config/passport-local-strategy");
+const passport = require('passport');
+const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongodb-session")(session);
 const sassMiddleware = require("node-sass-middleware");
 
@@ -33,6 +34,7 @@ app.set("layout extractScripts", true);
 // using view
 app.set("view engine", "ejs");
 app.set("views", "./views");
+// mongo store is used to store the session cookie in the db
 app.use(
   session({
     name: "codial",
