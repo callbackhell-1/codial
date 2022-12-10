@@ -1,38 +1,69 @@
-const Post = require("../models/post");
-const Comment = require("../models/comment");
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 
-module.exports.create = async function (req, res) {
-  try {
-    await Post.create({
-      content: req.body.content,
-      user: req.user._id,
-    });
-    req.flash("success", "Post created");
-    return res.redirect("back");
-  } catch (error) {
-    req.flash("error", "error");
-    return res.redirect("back");
-  }
-};
-module.exports.destroy = async function (req, res) {
-  try {
-    //  Before deleting the post check post exist or not
-    let post = await Post.findById(req.params.id);
+module.exports.create = async function(req, res){
+    try{
+        let post = await Post.create({
+            content: req.body.content,
+            user: req.user._id
+        });
+        
+        if (req.xhr){
+            // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
+            post = await post.populate('user', 'name').execPopulate();
 
-    if (post.user == req.user.id) {
-      post.remove();
+            return res.status(200).json({
+                data: {
+                    post: post
+                },
+                message: "Post created!"
+            });
+        }
 
-      await Comment.deleteMany({ post: req.params.id });
-      req.flash("success", "Post and associated deleted !");
-      return res.redirect("back");
+        req.flash('success', 'Post published!');
+        return res.redirect('back');
+
+    }catch(err){
+        req.flash('error', err);
+        // added this to view the error on console as well
+        console.log(err);
+        return res.redirect('back');
     }
-    // if (post.user == req.user.id) not match
-    else {
-      req.flash("error", "You can't delete this post");
-      return res.redirect("back");
+  
+}
+
+
+module.exports.destroy = async function(req, res){
+
+    try{
+        let post = await Post.findById(req.params.id);
+
+        if (post.user == req.user.id){
+            post.remove();
+
+            await Comment.deleteMany({post: req.params.id});
+
+
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        post_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
+
+            req.flash('success', 'Post and associated comments deleted!');
+
+            return res.redirect('back');
+        }else{
+            req.flash('error', 'You cannot delete this post!');
+            return res.redirect('back');
+        }
+
+    }catch(err){
+        req.flash('error', err);
+        return res.redirect('back');
     }
-  } catch (error) {
-    req.flash("error", "error");
-    return res.redirect("back");
-  }
-};
+    
+}
